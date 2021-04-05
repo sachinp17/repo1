@@ -1,0 +1,78 @@
+from __future__ import print_function
+import psycopg2
+import base64
+import json
+import custom_func as cf
+import boto3
+import logging
+import test_func as ts
+#import aws_cdk.aws_sns as sns
+
+print('Loading function')
+
+
+logger = logging.getLogger()
+logger.setLevel(logging.INFO)
+
+def lambda_handler(event, context):
+    #print("Received event: " + json.dumps(event, indent=2))
+    cf.cust_fun()
+    ts.test_fun_inside()
+    for record in event['Records']:
+        # Kinesis data is base64 encoded so decode here
+        payload = base64.b64decode(record['kinesis']['data'])
+        print("Decoded payload: " + format(payload))
+        """
+        connection = pc.psycopg2.connect(user = "user2", password = "user2", host = "postgresql-13859-0.cloudclusters.net",port = "13859",database = "test")
+
+        cursor = connection.cursor()
+
+        create_table_query = "insert into test1.mobile values (2,'samsung',123.89);"
+    
+        cursor.execute(create_table_query)
+        connection.commit()
+        print("Table created successfully in PostgreSQL ")
+    
+        
+        sqs = boto3.client('sqs')
+
+        queue_url = 'https://sqs.us-east-1.amazonaws.com/161692660698/sqs_queue_url'
+        
+        response = sqs.send_message(
+        QueueUrl=queue_url,
+        DelaySeconds=10,
+        MessageAttributes={
+        'Title': {
+            'DataType': 'String',
+            'StringValue': 'The Whistler'
+        },
+        'Author': {
+            'DataType': 'String',
+            'StringValue': 'John Grisham'
+        }
+        },
+        MessageBody=(
+        'Information about current NY Times fiction bestseller for in lambda1 '
+        'week of 12/11/2016.'
+          )
+        )
+   
+        """
+    """
+    logger.info(event)
+    
+    if event['Success'] == True:
+        #return {'statusCode': 200,'body': event}
+        print("event success")
+    else:
+        print("event failed")
+        #raise Exception('Success is False', event)
+    
+    """
+    #return 'Successfully processed {} records.'.format(len(event['Records']))
+    print("Received event: " + json.dumps(event))
+
+    return {
+        "statusCode": 200,
+        "body": 'success'
+    }
