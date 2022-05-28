@@ -1,0 +1,705 @@
+
+------------------------------------
+Certification- https://www.examtopics.com/exams/amazon/aws-certified-solutions-architect-associate-saa-c02/view/5/
+https://www.examtopics.com/exams/amazon/aws-certified-solutions-architect-associate-saa-c02/view/
+https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/routing-policy.html
+https://aws.amazon.com/getting-started/hands-on/deliver-content-faster/
+https://aws.amazon.com/elasticloadbalancing/features/
+
+https://www.examtopics.com/exams/amazon/aws-certified-solutions-architect-associate-saa-c02/view/5/
+
+Question #36
+On a fleet of Amazon EC2 instances, a business runs a production application. The program takes data from an Amazon SQS queue and concurrently processes the messages. The message volume is variable, and traffic is often interrupted. This program should handle messages continuously and without interruption.
+D. Use Reserved Instances for the baseline capacity and use On-Demand Instances to handle additional capacity
+This should be D since the problem should "continually process messages without any downtime". Using spot instances above the baseline could possibly cause instance termination and thus downtime.
+
+Question #37
+A startup has developed an application that gathers data from Internet of Things (IoT) sensors installed on autos. Through Amazon Kinesis Data Firehose, the data is transmitted to and stored in Amazon S3. Each year, data generates billions of S3 objects. Each morning, the business retrains a set of machine learning (ML) models using data from the preceding 30 days.
+Four times a year, the corporation analyzes and trains other machine learning models using data from the preceding 12 months. The data must be accessible with a minimum of delay for a period of up to one year. Data must be preserved for archive reasons after one year.
+
+Which storage system best satisfies these criteria in terms of cost-effectiveness?
+D. Use the S3 Standard storage class. Create an S3 Lifecycle policy to transition objects to S3 Standard-Infrequent Access (S3 Standard-IA) after 30 days, and then to S3 Glacier Deep Archive after 1 year. Most Voted
+D because:
+- First 30 days- data access every morning ( predictable and frequently) – S3 standard
+- After 30 days, accessed 4 times a year – S3 infrequently access
+- Data preserved- S3 Gllacier Deep Archive
+
+Not B because S3 Intelligent-Tiering is suitable when access patterns change - https://aws.amazon.com/s3/storage-classes/intelligent-tiering/
+----
+Question #40Topic 1
+A corporation just announced the worldwide launch of their retail website. The website is hosted on numerous Amazon EC2 instances, which are routed via an Elastic Load Balancer. The instances are distributed across several Availability Zones in an Auto Scaling group.
+The firm want to give its clients with customized material depending on the device from which they view the website.
+
+Which steps should a solutions architect perform in combination to satisfy these requirements? (Select two.)
+
+A. Configure Amazon CloudFront to cache multiple versions of the content. Most Voted
+B. Configure a host header in a Network Load Balancer to forward traffic to different instances.
+C. Configure a Lambda@Edge function to send specific objects to users based on the User-Agent header. Most Voted
+D. Configure AWS Global Accelerator. Forward requests to a Network Load Balancer (NLB). Configure the NLB to set up host-based routing to different EC2 instances.
+E. Configure AWS Global Accelerator. Forward requests to a Network Load Balancer (NLB). Configure the NLB to set up path-based routing to different EC2 instances.
+
+
+A and C ladies and gentlemen: ref 1. https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/header-caching.html 
+2. https://docs.aws.amazon.com/lambda/latest/dg/lambda-edge.htm
+A and C.
+
+- B is wrong - NLBs do not understand HTTP (Layer 7 / Application layer) headers, this is what ALBs do. 
+Moreover, a host header is information of the DESTINATION server, not the SOURCE client\
+
+- D and E are wrong - Global Accelerator helps to SPEED UP requests. Doesn't help with CONTENT CUSTOMIZATION
+------
+A newly formed company developed a three-tiered web application. The front end is comprised entirely of static information. Microservices form the application layer. User data is kept in the form of JSON documents that must be accessible with a minimum of delay. The firm anticipates minimal regular traffic in the first year, with monthly traffic spikes. The startup team's operational overhead expenditures must be kept to a minimum.
+
+What should a solutions architect suggest as a means of achieving this?
+
+A. Use Amazon S3 static website hosting to store and serve the front end. Use AWS Elastic Beanstalk for the application layer. Use Amazon DynamoDB to store user data.
+B. Use Amazon S3 static website hosting to store and serve the front end. Use Amazon Elastic KubernetesService (Amazon EKS) for the application layer. Use Amazon DynamoDB to store user data.
+C. Use Amazon S3 static website hosting to store and serve the front end. Use Amazon API Gateway and AWS Lambda functions for the application layer. Use Amazon DynamoDB to store user data. Most Voted
+D. Use Amazon S3 static website hosting to store and serve the front end. Use Amazon API Gateway and AWS Lambda functions for the application layer. Use Amazon RDS with read replicas to store user data.
+
+
+Correct Answer: C 🗳️
+Community vote distribution
+C (100%)
+KEY PHRASE IN QUESTION IS "minimize operational overhead costs" : So, Rule out the possibilities that has EC2 and Manual Configurations ( i.e > RDS, EKS & BeanStalk )
+https://docs.aws.amazon.com/whitepapers/latest/microservices-on-aws/api-implementation.html
+
+-----------
+
+Question #43Topic 1
+Amazon Elastic Container Service (Amazon ECS) container instances are used to install an ecommerce website's web application behind an Application Load Balancer (ALB). The website slows down and availability is decreased during moments of heavy usage. A solutions architect utilizes Amazon CloudWatch alarms to be notified when an availability problem occurs, allowing them to scale out resources. The management of the business want a system that automatically reacts to such circumstances.
+
+Which solution satisfies these criteria?
+
+A. Set up AWS Auto Scaling to scale out the ECS service when there are timeouts on the ALB. Set up AWS Auto Scaling to scale out the ECS cluster when the CPU or memory reservation is too high.
+B. Set up AWS Auto Scaling to scale out the ECS service when the ALB CPU utilization is too high. Setup AWS Auto Scaling to scale out the ECS cluster when the CPU or memory reservation is too high.
+C. Set up AWS Auto Scaling to scale out the ECS service when the service's CPU utilization is too high. Set up AWS Auto Scaling to scale out the ECS cluster when the CPU or memory reservation is too high. Most Voted
+D. Set up AWS Auto Scaling to scale out the ECS service when the ALB target group CPU utilization is too high. Set up AWS Auto Scaling to scale out the ECS cluster when the CPU or memory reservation is too high.
+ 
+Correct Answer: A 🗳️
+Community vote distribution
+C (60%)
+A (20%)
+D (20%)
+
+https://docs.aws.amazon.com/AmazonECS/latest/developerguide/service-autoscaling-targettracking.html
+https://docs.aws.amazon.com/AmazonECS/latest/developerguide/service-configure-auto-scaling.html
+
+----------------
+Question #44Topic 1
+A business uses Site-to-Site VPN connections to provide safe access to AWS Cloud services from on-premises. Users are experiencing slower VPN connectivity as a result of increased traffic through the VPN connections to the Amazon EC2 instances.
+
+Which approach will result in an increase in VPN throughput?
+
+A. Implement multiple customer gateways for the same network to scale the throughput.
+B. Use a transit gateway with equal cost multipath routing and add additional VPN tunnels. Most Voted
+C. Configure a virtual private gateway with equal cost multipath routing and multiple channels.
+D. Increase the number of tunnels in the VPN configuration to scale the throughput beyond the default limit.
+ 
+Correct Answer: A 🗳️
+Community vote distribution
+B (100%)
+
+Answer is B.
+https://aws.amazon.com/blogs/networking-and-content-delivery/scaling-vpn-throughput-using-aws-transit-gateway/
+With AWS Transit Gateway, you can simplify the connectivity between multiple VPCs and also connect to any VPC attached to AWS Transit Gateway with a single VPN connection. AWS Transit Gateway also enables you to scale the IPsec VPN throughput with equal cost multi-path (ECMP) routing support over multiple VPN tunnels. A single VPN tunnel still has a maximum throughput of 1.25 Gbps. If you establish multiple VPN tunnels to an ECMP-enabled transit gateway, it can scale beyond the default limit of 1.25 Gbps.
+------------------------
+Question #45Topic 1
+On Amazon EC2 Linux instances, a business hosts a website. Several of the examples are malfunctioning. The troubleshooting indicates that the unsuccessful instances lack swap space. The operations team's lead need a monitoring solution for this.
+
+What recommendations should a solutions architect make?
+
+A. Configure an Amazon CloudWatch SwapUsage metric dimension. Monitor the SwapUsage dimension in the EC2 metrics in CloudWatch.
+B. Use EC2 metadata to collect information, then publish it to Amazon CloudWatch custom metrics. Monitor SwapUsage metrics in CloudWatch.
+C. Install an Amazon CloudWatch agent on the instances. Run an appropriate script on a set schedule. Monitor SwapUtilization metrics in CloudWatch. Most Voted
+D. Enable detailed monitoring in the EC2 console. Create an Amazon CloudWatch SwapUtilization custom metric. Monitor SwapUtilization metrics in CloudWatch.
+ 
+Correct Answer: B 🗳️
+Reference:
+https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/mon-scripts.html
+Community vote distribution
+C (71%)
+14%
+14%
+
+Answer - C
+https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/Install-CloudWatch-Agent.html
+https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/create-cloudwatch-agent-configuration-file.html
+
+The CloudWatch monitoring scripts are deprecated.
+------------
+7%
+
+Question #48Topic 1
+A business wishes to migrate from many independent Amazon Web Services accounts to a consolidated, multi-account design. The organization intends to generate a large number of new AWS accounts for its business divisions. The organization must use a single corporate directory service to authenticate access to these AWS accounts.
+
+Which steps should a solutions architect advocate in order to satisfy these requirements? (Select two.)
+
+A. Create a new organization in AWS Organizations with all features turned on. Create the new AWS accounts in the organization. Most Voted
+B. Set up an Amazon Cognito identity pool. Configure AWS Single Sign-On to accept Amazon Cognito authentication.
+C. Configure a service control policy (SCP) to manage the AWS accounts. Add AWS Single Sign-On to AWS Directory Service.
+D. Create a new organization in AWS Organizations. Configure the organization's authentication mechanism to use AWS Directory Service directly.
+E. Set up AWS Single Sign-On (AWS SSO) in the organization. Configure AWS SSO, and integrate it with the company's corporate directory service. Most Voted
+ 
+Correct Answer: BC 🗳️
+Reference:
+https://aws.amazon.com/cognito/
+https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_scps.html
+
+Community vote distribution
+AE (68%)
+CD (21%)
+11%
+D&E are most appropriate.
+https://docs.aws.amazon.com/organizations/latest/userguide/services-that-can-integrate-directory-service.html
+https://docs.aws.amazon.com/singlesignon/latest/userguide/useraccess.html
+
+----------
+Question #49Topic 1
+A solutions architect is developing a daily data processing task that will take up to two hours to finish. If the task is stopped, it must be restarted from scratch.
+
+What is the MOST cost-effective way for the solutions architect to solve this issue?
+
+A. Create a script that runs locally on an Amazon EC2 Reserved Instance that is triggered by a cron job.
+B. Create an AWS Lambda function triggered by an Amazon EventBridge (Amazon CloudWatch Events) scheduled event.
+C. Use an Amazon Elastic Container Service (Amazon ECS) Fargate task triggered by an Amazon EventBridge (Amazon CloudWatch Events) scheduled event.
+D. Use an Amazon Elastic Container Service (Amazon ECS) task running on Amazon EC2 triggered by an Amazon EventBridge (Amazon CloudWatch Events) scheduled event.
+ 
+Correct Answer: C 🗳️
+Community vote distribution
+C (100%)
+
+Answer is C
+
+A is wrong; "EC2 Reserved Instance" not cost effective compared to serverless
+B is wrong; Lambda runs for 15 minutes max
+D is wrong; "running on Amazon EC2" not cost effective
+-----------
+
+Question #50Topic 1
+A business intends to use AWS to host a survey website. The firm anticipated a high volume of traffic. As a consequence of this traffic, the database is updated asynchronously. The organization want to avoid dropping writes to the database housed on AWS.
+
+How should the business's application be written to handle these database requests?
+
+A. Configure the application to publish to an Amazon Simple Notification Service (Amazon SNS) topic. Subscribe the database to the SNS topic.
+B. Configure the application to subscribe to an Amazon Simple Notification Service (Amazon SNS) topic. Publish the database updates to the SNS topic.
+C. Use Amazon Simple Queue Service (Amazon SQS) FIFO queues to queue the database connection until the database has resources to write the data.
+D. Use Amazon Simple Queue Service (Amazon SQS) FIFO queues for capturing the writes and draining the queue as each write is made to the database. Most Voted
+ 
+Correct Answer: A 🗳️
+Community vote distribution
+D (90%)
+10%
+
+
+sqs-
+https://jayendrapatil.com/tag/sqs-standard-queues-vs-sqs-fifo-queues/
+
+------------
+Question #51Topic 1
+On a huge fleet of Amazon EC2 instances, a business runs an application. The program reads and writes items to a DynamoDB database hosted by Amazon. The DynamoDB database increases in size regularly, yet the application requires just data from the previous 30 days. The organization need a solution that is both cost effective and time efficient to implement.
+
+Which solution satisfies these criteria?
+
+A. Use an AWS CloudFormation template to deploy the complete solution. Redeploy the CloudFormation stack every 30 days, and delete the original stack.
+B. Use an EC2 instance that runs a monitoring application from AWS Marketplace. Configure the monitoring application to use Amazon DynamoDB Streams to store the timestamp when a new item is created in the table. Use a script that runs on the EC2 instance to delete items that have a timestamp that is older than 30 days.
+C. Configure Amazon DynamoDB Streams to invoke an AWS Lambda function when a new item is created in the table. Configure the Lambda function to delete items in the table that are older than 30 days.
+D. Extend the application to add an attribute that has a value of the current timestamp plus 30 days to each new item that is created in the table. Configure DynamoDB to use the attribute as the TTL attribute. Most Voted
+ 
+
+
+D is correct. Amazon DynamoDB Time to Live (TTL) allows you to define a per-item timestamp to determine when an item is no longer needed. Shortly after the date and time of the specified timestamp, DynamoDB deletes the item from your table without consuming any write throughput. TTL is provided at no extra cost as a means to reduce stored data volumes by retaining only the items that remain current for your workload’s needs.
+
+TTL is useful if you store items that lose relevance after a specific time. The following are example TTL use cases:
+
+Remove user or sensor data after one year of inactivity in an application.
+
+Archive expired items to an Amazon S3 data lake via Amazon DynamoDB Streams and AWS Lambda.
+
+Retain sensitive data for a certain amount of time according to contractual or regulatory obligations.
+https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/TTL.html
+
+-------------
+Direct connect costing-
+https://aws.amazon.com/directconnect/pricing/
+https://aws.amazon.com/blogs/aws/aws-data-transfer-prices-reduced/
+----------
+
+Question #53Topic 1
+A business is developing an application that is composed of many microservices. The organization has chosen to deploy its software on AWS through container technology. The business need a solution that requires little ongoing work for maintenance and growth. Additional infrastructure cannot be managed by the business.
+
+Which steps should a solutions architect perform in combination to satisfy these requirements? (Select two.)
+
+A. Deploy an Amazon Elastic Container Service (Amazon ECS) cluster. Most Voted
+B. Deploy the Kubernetes control plane on Amazon EC2 instances that span multiple Availability Zones.
+C. Deploy an Amazon Elastic Container Service (Amazon ECS) service with an Amazon EC2 launch type. Specify a desired task number level of greater than or equal to 2.
+D. Deploy an Amazon Elastic Container Service (Amazon ECS) service with a Fargate launch type. Specify a desired task number level of greater than or equal to 2. Most Voted
+E. Deploy Kubernetes worker nodes on Amazon EC2 instances that span multiple Availability Zones. Create a deployment that specifies two or more replicas for each microservice.
+ 
+Correct Answer: AB 🗳️
+Community vote distribution
+AD (86%)
+14%
+--------------
+Question #56Topic 1
+A business has implemented a MySQL database on Amazon RDS. The database support team is reporting delayed reads on the DB instance as a result of the increased transactions and advises installing a read replica.
+
+Which activities should a solutions architect do prior to deploying this change? (Select two.)
+
+A. Enable binlog replication on the RDS primary node.
+B. Choose a failover priority for the source DB instance.
+C. Allow long-running transactions to complete on the source DB instance. Most Voted
+D. Create a global table and specify the AWS Regions where the table will be available.
+E. Enable automatic backups on the source instance by setting the backup retention period to a value other than 0. Most Voted
+ 
+Correct Answer: CD 🗳️
+Reference:
+https://hevodata.com/learn/aws-rds-postgres-replication/ https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/GlobalTables.html
+
+Community vote distribution
+CE (100%)
+
+https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_ReadRepl.html
+---------------
+uestion #63Topic 1
+On Amazon Aurora, a business is operating a database. Every nightfall, the database is inactive. When user traffic surges in the early hours, an application that makes large reads on the database will face performance concerns. When reading from the database during these peak hours, the program encounters timeout issues. Due to the lack of a dedicated operations crew, the organization need an automated solution to solve performance concerns.
+
+Which activities should a solutions architect take to ensure that the database automatically adjusts to the increasing read load? (Select two.)
+
+A. Migrate the database to Aurora Serverless. Most Voted
+B. Increase the instance size of the Aurora database.
+C. Configure Aurora Auto Scaling with Aurora Replicas. Most Voted
+D. Migrate the database to an Aurora multi-master cluster.
+E. Migrate the database to an Amazon RDS for MySQL Multi-AZ deployment.
+ 
+Correct Answer: CD 🗳️
+Reference:
+https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Aurora.Managing.Performance.html https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-multi-master.html
+Community vote distribution
+AC (100%)
+
+
+Selected Answer: AC
+A and C
+
+- The problem here is to AUTOMATICALLY SCALE READS during traffic surges
+
+A. Migrate the database to Aurora Serverless.
+Correct. https://aws.amazon.com/rds/aurora/serverless/
+
+B. Increase the instance size of the Aurora database.
+Wrong. The excess capacity will be unutilized during off-peak periods
+
+C. Configure Aurora Auto Scaling with Aurora Replicas.
+Correct. https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Aurora.Integrating.AutoScaling.html
+
+D. Migrate the database to an Aurora multi-master cluster.
+Wrong. This helps to scale WRITES, not reads - https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-multi-master.html
+
+E. Migrate the database to an Amazon RDS for MySQL Multi-AZ deployment.
+Wrong. This is for availability and disaster recovery, NOT read scaling. The standby instance is NOT used to serve reads or writes. Active-passive failover is adopted. https://aws.amazon.com/rds/features/multi-az/
+-----------
+Question #65Topic 1
+A business uses Amazon EC2 instances to operate an API-based inventory reporting application. The program makes use of an Amazon DynamoDB database to store data. The distribution centers of the corporation use an on-premises shipping application that communicates with an API to update inventory prior to generating shipping labels. Each day, the organization has seen application outages, resulting in missed transactions.
+
+What should a solutions architect propose to increase the resilience of an application?
+
+A. Modify the shipping application to write to a local database.
+B. Modify the application APIs to run serverless using AWS Lambda
+C. Configure Amazon API Gateway to call the EC2 inventory application APIs.
+D. Modify the application to send inventory updates using Amazon Simple Queue Service (Amazon SQS). Most Voted
+ 
+Correct Answer: A 🗳️
+Community vote distribution
+D (89%)
+11%
+
+https://d2908q01vomqb2.cloudfront.net/fc074d501302eb2b93e2554793fcaf50b3bf7291/2020/03/19/app-integration-benefits-1024x289.png
+https://aws.amazon.com/es/blogs/architecture/application-integration-using-queues-and-messages/
+
+
+ NJo Highly Voted  7 months, 3 weeks ago
+'Application interruptions' - So application is missing inventory updates as it seems. If the distrubution center sends updates to SQS where it will be buffered if the application is facing interruptions. Application can then resume processing from SQS once it's back up and running.
+
+I'll go with D.
+   upvoted 62 times
+ robertomartinez 7 months, 2 weeks ago
+I definitely agree, without information about the cause of the interruptions, you can only say D so that the application is resilient to interruption because the data is buffered in queue. Choosing lambda (B), hence making the application more available is making too much assumptions about the untold nature of the interruption. Availability is different from resiliency (deal with errors), the answer is D
+
+--------
+Question #70Topic 1
+Each month, a business keeps 200 GB of data on Amazon S3. At the conclusion of each month, the corporation must analyze this data to calculate the number of things sold in each sales area during the preceding month.
+
+Which analytics approach is the MOST cost-effective option for the business?
+
+A. Create an Amazon Elasticsearch Service (Amazon ES) cluster. Query the data in Amazon ES. Visualize the data by using Kibana.
+B. Create a table in the AWS Glue Data Catalog. Query the data in Amazon S3 by using Amazon Athena. Visualize the data in Amazon QuickSight. Most Voted
+C. Create an Amazon EMR cluster. Query the data by using Amazon EMR, and store the results in Amazon S3. Visualize the data in Amazon QuickSight.
+D. Create an Amazon Redshift cluster. Query the data in Amazon Redshift, and upload the results to Amazon S3. Visualize the data in Amazon QuickSight.
+ 
+Correct Answer: A 🗳️
+Community vote distribution
+B (83%)
+A (17%)
+
+
+I would go for B
+
+A is definitely out as ES is for data visualization not querying of data
+C and D are more costly than B; EMR and Redshfit operate at a higher compute level than Athena
+
+-----------------
+Question #72Topic 1
+A business intends to transfer a TCP-based application onto the company's virtual private cloud (VPC). The program is available to the public over an unsupported TCP port via a physical device located in the company's data center. This public endpoint has a latency of less than 3 milliseconds and can handle up to 3 million requests per second. The organization needs the new public endpoint in AWS to function at the same level of performance.
+
+What solution architecture approach should be recommended to satisfy this requirement?
+
+A. Deploy a Network Load Balancer (NLB). Configure the NLB to be publicly accessible over the TCP port that the application requires. Most Voted
+B. Deploy an Application Load Balancer (ALB). Configure the ALB to be publicly accessible over the TCP port that the application requires.
+C. Deploy an Amazon CloudFront distribution that listens on the TCP port that the application requires. Use an Application Load Balancer as the origin.
+D. Deploy an Amazon API Gateway API that is configured with the TCP port that the application requires. Configure AWS Lambda functions with provisioned concurrency to process the requests.
+ 
+Correct Answer: C 🗳️
+Community vote distribution
+A (100%)
+
+
+
+Selected Answer: A
+TCP & milliseconds means NLB
+
+ Hizumi Highly Voted  8 months, 1 week ago
+Answer should be (A), since we are required to be able to handle 3 million request per second. A NLB is able to handle up to tens of millions of requests per second, while providing high performance and low latency.
+https://aws.amazon.com/blogs/aws/new-network-load-balancer-effortless-scaling-to-millions-of-requests-per-second/
+   upvoted 40 times
+ byhyey Highly Voted  7 months, 3 weeks ago
+Looks to be A to me:
+https://aws.amazon.com/elasticloadbalancing/network-load-balancer
+
+Network Load Balancer operates at the connection level (Layer 4), routing connections to targets (Amazon EC2 instances, microservices, and containers) within Amazon VPC, based on IP protocol data. Ideal for load balancing of both TCP and UDP traffic, Network Load Balancer is capable of handling millions of requests per second while maintaining ultra-low latencies. Network Load Balancer is optimized to handle sudden and volatile traffic patterns while using a single static IP address per Availability Zone. It is integrated with other popular AWS services such as Auto Scaling, Amazon EC2 Container Service (ECS), Amazon CloudFormation, and AWS Certificate Manager (ACM).
+   upvoted 10 times
+ zik87 Most Recent  2 months, 3 weeks ago
+Cannot be D because API Gateway has a limit of 10000 request per second
+   upvoted 1 times
+ Rightsaidfred 3 months ago
+Network Load Balancer is for TCP so it is option A
+   upvoted 1 times
+ sayed 3 months, 3 weeks ago
+Selected Answer: A
+TCP & milliseconds means NLB
+   upvoted 1 times
+ Robert_B 4 months, 1 week ago
+Selected Answer: A
+NLB is fast and can handle UDP/TCP. Question tricks you into the unsupported port, but that is on-prem situation, not the case for AWS. ALB behind, even with CloudFront will not be able to support the no of requests/second.
+
+-----------------
+
+
+
+Question #73Topic 1
+Within the same AWS account, a firm has two VPCs situated in the us-west-2 Region. The business must permit network communication between these VPCs. Each month, about 500 GB of data will be transferred between the VPCs.
+
+Which approach is the MOST cost-effective for connecting these VPCs?
+
+A. Implement AWS Transit Gateway to connect the VPCs. Update the route tables of each VPC to use the transit gateway for inter-VPC communication.
+B. Implement an AWS Site-to-Site VPN tunnel between the VPCs. Update the route tables of each VPC to use the VPN tunnel for inter-VPC communication.
+C. Set up a VPC peering connection between the VPCs. Update the route tables of each VPC to use the VPC peering connection for inter-VPC communication. Most Voted
+D. Set up a 1 GB AWS Direct Connect connection between the VPCs. Update the route tables of each VPC to use the Direct Connect connection for inter-VPC communication.
+ 
+Correct Answer: D 🗳️
+Community vote distribution
+C (100%)
+
+Lower cost — With VPC peering you only pay for data transfer charges. Transit Gateway has an hourly charge per attachment in addition to the data transfer fees.
+-------------
+Question #74Topic 1
+A business's production workload is hosted on an Amazon Aurora MySQL DB cluster comprised of six Aurora Replicas. The corporation wishes to automate the distribution of near-real-time reporting requests from one of its departments among three Aurora Replicas. These three copies are configured differently from the rest of the DB cluster in terms of computation and memory.
+
+Which solution satisfies these criteria?
+
+A. Create and use a custom endpoint for the workload. Most Voted
+B. Create a three-node cluster clone and use the reader endpoint.
+C. Use any of the instance endpoints for the selected three nodes.
+D. Use the reader endpoint to automatically distribute the read-only workload.
+ 
+Correct Answer: B 🗳️
+Community vote distribution
+A (100%)
+
+A custom endpoint
+https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Aurora.Overview.Endpoints.html#Aurora.Endpoints.Custom
+------------
+
+Question #75Topic 1
+A business's on-premises data center has reached its storage limit. The organization wishes to shift its storage system to AWS while keeping bandwidth costs as low as possible. The solution must enable rapid and cost-free data retrieval.
+
+How are these stipulations to be met?
+
+A. Deploy Amazon S3 Glacier Vault and enable expedited retrieval. Enable provisioned retrieval capacity for the workload.
+B. Deploy AWS Storage Gateway using cached volumes. Use Storage Gateway to store data in Amazon S3 while retaining copies of frequently accessed data subsets locally.
+C. Deploy AWS Storage Gateway using stored volumes to store data locally. Use Storage Gateway to asynchronously back up point-in-time snapshots of the data to Amazon S3.
+D. Deploy AWS Direct Connect to connect with the on-premises data center. Configure AWS Storage Gateway to store data locally. Use Storage Gateway to asynchronously back up point-in-time snapshots of the data to Amazon S3.
+ 
+Correct Answer: B 🗳️
+
+
+Answer is B.
+
+C is wrong because they already running out of space at on-premises. So why would they store the data again loacally .
+   upvoted 100 times
+ robertomartinez 6 months, 3 weeks ago
+I see the point in real life, but out of space notion is hypothetical we don't have details. There is only one hard constraint in the question "must allow for immediate retrieval of data at no cost" : if data is not cached it's not gonna be immadiate and you'll have at least bandwith cost for data out. To me answer is "C" even though in real life I'd go with B
+
+
+
+----------
+
+Question #77Topic 1
+A solutions architect must create a solution that retrieves data every two minutes from an internet-based third-party web service. Each data retrieval is performed using a Python script in less than 100 milliseconds. The answer is a JSON object of less than 1 KB in size including sensor data. The architect of the solution must keep both the JSON object and the date.
+
+Which approach is the most cost-effective in meeting these requirements?
+
+A. Deploy an Amazon EC2 instance with a Linux operating system. Configure a cron job to run the script every 2 minutes. Extend the script to store the JSON object along with the timestamp in a MySQL database that is hosted on an Amazon RDS DB instance.
+B. Deploy an Amazon EC2 instance with a Linux operating system to extend the script to run in an infinite loop every 2 minutes. Store the JSON object along with the timestamp in an Amazon DynamoDB table that uses the timestamp as the primary key. Run the script on the EC2 instance.
+C. Deploy an AWS Lambda function to extend the script to store the JSON object along with the timestamp in an Amazon DynamoDB table that uses the timestamp as the primary key. Use an Amazon EventBridge (Amazon CloudWatch Events) scheduled event that is initiated every 2 minutes to invoke the Lambda function.
+D. Deploy an AWS Lambda function to extend the script to run in an infinite loop every 2 minutes. Store the JSON object along with the timestamp in an Amazon DynamoDB table that uses the timestamp as the primary key. Ensure that the script is called by the handler function that is configured for the Lambda function.
+ 
+Correct Answer: C 🗳️
+Reference:
+https://docs.aws.amazon.com/connect/latest/adminguide/connect-ag.pdf
+C.
+A wrong, MySQL DB can’t store JSON
+B wrong, compare with lambda, EC2 cost more.
+D wrong, Lambda max run time 15 mins.
+
+-----------------
+Question #80Topic 1
+On Amazon EC2 instances, a business runs an application. The volume of traffic to the webpage grows significantly during business hours and then falls.
+The CPU usage of an Amazon EC2 instance is a good measure of the application's end-user demand. The organization has specified a minimum group size of two EC2 instances and a maximum group size of ten EC2 instances for an Auto Scaling group.
+The firm is worried that the Auto Scaling group's existing scaling policy may be incorrect. The organization must prevent excessive EC2 instance provisioning and paying unneeded fees.
+
+What recommendations should a solutions architect make to satisfy these requirements?
+
+A. Configure Amazon EC2 Auto Scaling to use a scheduled scaling plan and launch an additional 8 EC2 instances during business hours.
+B. Configure AWS Auto Scaling to use a scaling plan that enables predictive scaling. Configure predictive scaling with a scaling mode of forecast and scale, and to enforce the maximum capacity setting during scaling.
+C. Configure a step scaling policy to add 4 EC2 instances at 50% CPU utilization and add another 4 EC2 instances at 90% CPU utilization. Configure scale-in policies to perform the reverse and remove EC2 instances based on the two values. Most Voted
+D. Configure AWS Auto Scaling to have a desired capacity of 5 EC2 instances, and disable any existing scaling policies. Monitor the CPU utilization metric for 1 week. Then create dynamic scaling policies that are based on the observed values.
+ 
+Correct Answer: D 🗳️
+Reference:
+https://docs.aws.amazon.com/autoscaling/ec2/userguide/as-scaling-simple-step.html
+Community vote distribution
+C (50%)
+B (43%)
+7%
+--------------
+Question #81Topic 1
+A business has launched a mobile multiplayer game. The game demands real-time monitoring of participants' latitude and longitude positions. The game's data storage must be capable of quick updates and location retrieval.
+The game stores location data on an Amazon RDS for PostgreSQL DB instance with read replicas. The database is unable to sustain the speed required for reading and writing changes during high use times. The game's user base is rapidly growing.
+
+What should a solutions architect do to optimize the data tier's performance?
+
+A. Take a snapshot of the existing DB instance. Restore the snapshot with Multi-AZ enabled.
+B. Migrate from Amazon RDS to Amazon Elasticsearch Service (Amazon ES) with Kibana.
+C. Deploy Amazon DynamoDB Accelerator (DAX) in front of the existing DB instance. Modify the game to use DAX.
+D. Deploy an Amazon ElastiCache for Redis cluster in front of the existing DB instance. Modify the game to use Redis. Most Voted
+ 
+Correct Answer: C 🗳️
+Community vote distribution
+D (100%)
+
+
+The answer is D
+
+ LETSGETIT 5 months, 1 week ago
+ C is wrong because DAX is for DynamoDB
+
+Deploy an Amazon ElastiCache for Redis cluster in front of the existing DB instance. Modify the game to use Redis
+
+keywords: The game requires live location tracking of players based
+
+Redis (which stands for REmote DIctionary Server) is an open source, in-memory datastore, often used as a database, cache or message broker. It can store and manipulate high-level data types like lists, maps, sets, and sorted sets.22-Feb-2019
+What port does Redis use?
+Port 6379
+By default, the Redis server runs on TCP Port 6379.
+-----------
+Question #82Topic 1
+A company's on-premises infrastructure and AWS need a secure connection. This connection does not need a large quantity of bandwidth and is capable of handling a limited amount of traffic. The link should be established immediately.
+
+Which way is the MOST CHEAPEST for establishing this sort of connection?
+
+A. Implement a client VPN.
+B. Implement AWS Direct Connect.
+C. Implement a bastion host on Amazon EC2.
+D. Implement an AWS Site-to-Site VPN connection.
+ 
+Correct Answer: D 🗳️
+Community vote distribution
+D (100%)
+
+
+
+concept : DirectConnect-direct link |||Site to Site VPN-use internet
+
+establishment/setuptime: DirectConnect-over a month|||Site to Site VPN-immediate
+
+consitent throughput between ends: DirectConnect-yes|||Site to Site VPN-no
+
+encryption :DirectConnect-no|||Site to Site VPN-yes
+(Direct Connect is still secure since it is dedicated line)
+-------------
+
+uestion #83Topic 1
+A business is developing a web-based application that will operate on Amazon EC2 instances distributed across several Availability Zones. The online application will enable access to a collection of over 900 TB of text content. The corporation expects times of heavy demand for the online application. A solutions architect must guarantee that the text document storage component can scale to meet the application's demand at all times. The corporation is concerned about the solution's total cost.
+
+Which storage system best satisfies these criteria in terms of cost-effectiveness?
+
+A. Amazon Elastic Block Store (Amazon EBS)
+B. Amazon Elastic File System (Amazon EFS)
+C. Amazon Elasticsearch Service (Amazon ES)
+D. Amazon S3 Most Voted
+ 
+Correct Answer: C 🗳️
+Reference:
+https://www.missioncloud.com/blog/resource-amazon-ebs-vs-efs-vs-s3-picking-the-best-aws-storage-option-for-your-business
+Community vote distribution
+D (100%)
+
+NOTE THE KEY WORDS HERE :
+"repository of text " ;
+"storage component for the text documents can scale to meet the demand of the application at all times"
+- "MOST cost-effectively"
+
+-- First C is out of question as they are talking about a Storage Component and Elasticsearch Service is not a Storage Component
+- A ( Amazon EBS ) is out of question since they are talking about - Most Cost-effective
+So now, we have two options left ( B & D )
+Now some people argued that it should be B because of the first line that says " A company is building a web-based application running on Amazon EC2 instances in multiple Availability Zones" ....so , at first I also was inclined towards answer B ( i.e EFS Storage ) but then I read it again and then I saw this word " repository " and "Most Cost Effective" ....which makes me to finally go with answer D ( S3 Bucket )
+------------------
+question #84Topic 1
+A business is using a tape backup system to offshore store critical application data. Daily data volume is in the neighborhood of 50 TB. For regulatory requirements, the firm must maintain backups for seven years. Backups are infrequently viewed, and a week's notice is normally required before restoring a backup.
+The organization is now investigating a cloud-based solution in order to cut storage expenses and the operational load associated with tape management. Additionally, the organization wants to ensure that the move from tape backups to the cloud is as seamless as possible.
+
+Which storage option is the CHEAPEST?
+
+A. Use Amazon Storage Gateway to back up to Amazon Glacier Deep Archive. Most Voted
+B. Use AWS Snowball Edge to directly integrate the backups with Amazon S3 Glacier.
+C. Copy the backup data to Amazon S3 and create a lifecycle policy to move the data to Amazon S3 Glacier.
+D. Use Amazon Storage Gateway to back up to Amazon S3 and create a lifecycle policy to move the backup to Amazon S3 Glacier.
+ 
+Correct Answer: A 🗳️
+Community vote distribution
+A (62%)
+D (38%)
+
+
+Agree with A
+backups can go directly to Glacier Deep Archive.
+https://aws.amazon.com/about-aws/whats-new/2019/03/aws-storage-gateway-service-integrates-tape-gateway-with-amazon-s3-glacier-deeparchive-storage-class/
+----------
+
+Question #86Topic 1
+A business's data warehouse is powered by Amazon Redshift. The firm want to assure the long-term viability of its data in the event of component failure.
+
+What recommendations should a solutions architect make?
+
+A. Enable concurrency scaling.
+B. Enable cross-Region snapshots.
+C. Increase the data retention period.
+D. Deploy Amazon Redshift in Multi-AZ.
+ 
+Correct Answer: B 🗳️
+Community vote distribution
+B (100%)
+
+
+Ans B, enable cross region snapshots. That will improve durability. Multi-AZ is not supported with RedShift.
+https://aws.amazon.com/about-aws/whats-new/2019/10/amazon-redshift-improves-performance-of-inter-region-snapshot-transfers/
+
+Performance enhancements have been made that allow Amazon Redshift to copy snapshots across regions much faster, allowing customers to support much more aggressive Recovery Time Objective (RTO) and Recovery Point Objective (RPO) Disaster Recovery (DR) policies
+--------
+Question #87Topic 1
+A business offers its customers with an API that automates tax calculations based on item pricing. During the Christmas season, the firm receives an increased volume of queries, resulting in delayed response times. A solutions architect must create a scalable and elastic system.
+
+What is the solution architect's role in achieving this?
+
+A. Provide an API hosted on an Amazon EC2 instance. The EC2 instance performs the required computations when the API request is made.
+B. Design a REST API using Amazon API Gateway that accepts the item names. API Gateway passes item names to AWS Lambda for tax computations.
+C. Create an Application Load Balancer that has two Amazon EC2 instances behind it. The EC2 instances will compute the tax on the received item names.
+D. Design a REST API using Amazon API Gateway that connects with an API hosted on an Amazon EC2 instance. API Gateway accepts and passes the item names to the EC2 instance for tax computations.
+ 
+Correct Answer: B 🗳️
+Community vote distribution
+B (100%)
+
+
+A. This isn't a scalable and elastic option.
+B. Sounds about right, Api Gateway is scalable, and elastic, same as Lambda.
+C. How is this elastic? We need an ASG.
+D. It doesn't have elasticity or scalability.
+
+--------------
+
+Question #88Topic 1
+A business is operating a worldwide application. Users upload various videos, which are subsequently combined into a single video file. The program receives uploads from users through a single Amazon S3 bucket in the us-east-1 Region. The same S3 bucket also serves as the download point for the generated video file. The finished video file is around 250 GB in size.
+The organization requires a solution that enables quicker uploads and downloads of video files stored in Amazon S2. The corporation will charge consumers who choose to pay for the faster speed a monthly fee.
+
+What actions should a solutions architect take to ensure that these criteria are met?
+
+A. Enable AWS Global Accelerator for the S3 endpoint. Adjust the application's upload and download links to use the Global Accelerator S3 endpoint for users who have a subscription.
+B. Enable S3 Cross-Region Replication to S3 buckets in all other AWS Regions. Use an Amazon Route 53 geolocation routing policy to route S3 requests based on the location of users who have a subscription.
+C. Create an Amazon CloudFront distribution and use the S3 bucket in us-east-1 as an origin. Adjust the application to use the CloudFront URL as the upload and download links for users who have a subscription.
+D. Enable S3 Transfer Acceleration for the S3 bucket in us-east-1. Configure the application to use the bucket's S3-accelerate endpoint domain name for the upload and download links for users who have a subscription.
+ 
+Correct Answer: C 🗳️
+Community vote distribution
+D (100%)
+
+------------
+
+Question #89Topic 1
+A solutions architect is designing a VPC architecture with various subnets. Six subnets will be used in two Availability Zones. Subnets are classified as public, private, and database-specific. Access to a database should be restricted to Amazon EC2 instances operating on private subnets.
+
+Which solution satisfies these criteria?
+
+A. Create a now route table that excludes the route to the public subnets' CIDR blocks. Associate the route table to the database subnets.
+B. Create a security group that denies ingress from the security group used by instances in the public subnets. Attach the security group to an Amazon RDS DB instance.
+C. Create a security group that allows ingress from the security group used by instances in the private subnets. Attach the security group to an Amazon RDS DB instance. Most Voted
+D. Create a new peering connection between the public subnets and the private subnets. Create a different peering connection between the private subnets and the database subnets.
+ 
+Correct Answer: B 🗳️
+Community vote distribution
+C (100%)
+
+-----------
+Question #90Topic 1
+A business is implementing a web gateway. The firm want to limit public access to the program to the online part. The VPC was created with two public subnets and two private subnets to achieve this. The application will be hosted on many Amazon EC2 instances that will be managed through an Auto Scaling group. SSL termination must be delegated to a separate instance on Amazon EC2.
+
+What actions should a solutions architect take to guarantee compliance with these requirements?
+
+A. Configure the Network Load Balancer in the public subnets. Configure the Auto Scaling group in the private subnets and associate it with the Application Load Balancer.
+B. Configure the Network Load Balancer in the public subnets. Configure the Auto Scaling group in the public subnets and associate it with the Application Load Balancer.
+C. Configure the Application Load Balancer in the public subnets. Configure the Auto Scaling group in the private subnets and associate it with the Application Load Balancer. Most Voted
+D. Configure the Application Load Balancer in the private subnets. Configure the Auto Scaling group in the private subnets and associate it with the Application Load Balancer.
+ 
+Correct Answer: C 🗳️
+Community vote distribution
+C (64%)
+A (36%)
+
+C since Internet-facing Application Load Balancers (ALB) and Classic ELBs must be provisioned exclusively in public subnets.
+   upvoted 47 times
+ HuseinHasan 8 months, 1 week ago
+Can you explain, why will you configure Auto scaling group in private subnet, as am confused with B and C
+   upvoted 3 times
+ Lucky_ 6 months, 3 weeks ago
+Servers are not exposed to Public, hence they are residing in Private Subnet. Web part is exposed which is in Public Subnet but the data is getting fetched from the servers. In order to provide seamless service in case of extreme traffic we need to configure Auto Scaling in private subnets.
+   upvoted 2 times
+ ramisohail 8 months ago
+because the the machines are residing in the private subnets to be secure but they are published over the internet so for maximum security you can place the application load balancer in the public subnet and it will forward the traffic to the private auto scaling group and it will handle the ssl offloading so it has to be an application aware layer 7 load balancer.
+
+After extensive research, I found that SSL termination happens on ALB, and since last year TLS termination can be done on NLB. Answer here would therefore be C.
+
+SSL offloading or SSL termination is removing the SSL based encryption from incoming traffic that a web server receives to eliminate the server from processing the burden of encrypting and decrypting traffic sent through SSL allowing it to focus its resources for serving web content.
+
+What is meant by TLS termination?
+A TLS termination proxy (or SSL termination proxy, or SSL offloading) is a proxy server that acts as an intermediary point between client and server applications, and is used to terminate and/or establish TLS (or DTLS) tunnels by decrypting and/or encrypting communications
